@@ -1,3 +1,3 @@
 # App Demo
 
-The app demo plugin
+The topology-policy plugin
