@@ -16,7 +16,7 @@ export class App extends React.PureComponent<AppRootProps, State> {
     this.form = new Field(this, {
       onChange: (name: string, value: any) => {
         const { targets } = this.state;
-        const tgt  = (targets || []).find(o => o.name === value);
+        const tgt = (targets || []).find(o => o.name === value);
         const values: any = this.form.getValues();
         values.clusters = [tgt?.cluster?.clusterName];
         values.namespace = tgt?.cluster?.namespace
@@ -32,29 +32,34 @@ export class App extends React.PureComponent<AppRootProps, State> {
       // @ts-ignore
       this.props.registerForm(this.form);
     }
-   
+
   }
 
-   getTargets = () => {
+  getTargets = () => {
     // @ts-ignore
     const { project } = this.props;
     getBackendSrv().get(`/api/v1/projects/${project}/targets`).then((res: any) => {
       this.setState({
         targets: res.targets
       })
+      this.form.setValues({ targets: "target1" });
+     
     })
   }
 
   componentDidMount() {
     this.getTargets();
-    this.setValues();
+    this.form.setValues({ targets: "target1" });
   }
 
-  setValues = () => {
+  setValues = (targets: any[]) => {
     // @ts-ignore
     const { value } = this.props;
-    if (value) {
-      this.form.setValues(value);
+    const tgt = (targets || []).find(o => o.cluster.clusterName === value.clusterName && o.cluster.namespace == value.namespace);
+    if (tgt) {
+      console.log("tgt", tgt);
+      this.form.setValues({ targets: tgt?.name });
+      // this.form.setValues(value);
     }
   };
 

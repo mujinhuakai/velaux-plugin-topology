@@ -1,7 +1,8 @@
 {
   "type": "definition",
-  "name": "PolicyTopology",
-  "id": "topology-policy",
+  "name": "deploy-target-topology",
+  "id": "topology",
+  "position": "definition.policy.topology",
   "info": {
     "keywords": [
       "topology-policy"
